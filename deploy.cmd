@@ -21,7 +21,7 @@ set NUGET_PACKAGES=%HOME%\.nuget
 call :ExecuteCmd nuget.exe restore -source https://myget.org/f/aspnetrelease/api/v3/index.json -source https://api.nuget.org/v3/index.json -packagesavemode nuspec
 IF !ERRORLEVEL! NEQ 0 goto error
 
-call :ExecuteCmd %PROGRAMFILES%\dotnet\dotnet publish --output "%DEPLOYMENT_TEMP%"
+call :ExecuteCmd "%PROGRAMFILES%\dotnet\dotnet" publish --output "%DEPLOYMENT_TEMP%"
 IF !ERRORLEVEL! NEQ 0 goto error
 
 call :ExecuteCmd "%KUDU_SYNC_CMD%" -v 50 -f "%DEPLOYMENT_TEMP%" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.hg;.deployment;deploy.cmd"
